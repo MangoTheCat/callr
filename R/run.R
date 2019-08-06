@@ -25,12 +25,15 @@ run_r <- function(options) {
         stdout_callback = real_block_callback,
         stderr_callback = real_block_callback,
         stderr_to_stdout = stderr_to_stdout,
+        connections = as.list(connections),
         echo_cmd = echo, echo = show, spinner = spinner,
         error_on_status = fail_on_status, timeout = timeout),
         extra)
       )
     )
   )
+
+  for (c in options$connections) try(close(c))
 
   res$command <- c(options$bin, options$real_cmdargs)
   res
